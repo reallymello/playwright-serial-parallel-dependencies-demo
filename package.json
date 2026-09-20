@@ -1,0 +1,22 @@
+{
+  "name": "playwright-serial-parallel-dependencies-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo: splitting Playwright tests into parallel-safe and serial-only suites, with and without project dependencies.",
+  "scripts": {
+    "test:parallel": "playwright test --project=parallel-safe",
+    "test:serial": "playwright test --project=serial-only",
+    "test:split": "playwright test --project=parallel-safe && playwright test --project=serial-only",
+    "test:deps": "playwright test -c playwright.dependencies.config.ts",
+    "test:collision": "playwright test -c playwright.collision.config.ts",
+    "test:tagged:parallel": "playwright test -c playwright.tagged.config.ts --project=parallel-safe",
+    "test:tagged:serial": "playwright test -c playwright.tagged.config.ts --project=serial-only",
+    "test:envs": "playwright test -c playwright.environments.config.ts",
+    "test:tagged:cli": "playwright test -c playwright.tagged-cli.config.ts --grep-invert @serial && playwright test -c playwright.tagged-cli.config.ts --grep @serial --workers=1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^24.0.0",
+    "dotenv": "^18.0.1"
+  }
+}

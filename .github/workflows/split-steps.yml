@@ -1,0 +1,39 @@
+name: Split steps (recommended)
+
+# Two separate invocations, no project `dependencies`. The serial suite runs
+# even when the parallel suite fails, and the job still fails if either did.
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      demo_fail:
+        description: 'Force a failing parallel test (DEMO_FAIL=1)'
+        type: boolean
+        default: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      DEMO_FAIL: ${{ inputs.demo_fail && '1' || '0' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Parallel-safe tests
+        id: parallel
+        run: npx playwright test --project=parallel-safe
+        continue-on-error: true
+
+      - name: Serial-only tests
+        id: serial
+        run: npx playwright test --project=serial-only --workers=1
+        continue-on-error: true
+
+      - name: Fail job if either suite failed
+        if: steps.parallel.outcome == 'failure' || steps.serial.outcome == 'failure'
+        run: exit 1

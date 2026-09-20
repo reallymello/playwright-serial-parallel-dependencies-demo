@@ -1,0 +1,26 @@
+name: Project dependencies (shows the gotcha)
+
+# Uses playwright.dependencies.config.ts. Trigger manually with demo_fail=true
+# and watch the serial-only project never run.
+on:
+  workflow_dispatch:
+    inputs:
+      demo_fail:
+        description: 'Force a failing parallel test (DEMO_FAIL=1)'
+        type: boolean
+        default: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      DEMO_FAIL: ${{ inputs.demo_fail && '1' || '0' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run all projects with dependencies
+        run: npx playwright test -c playwright.dependencies.config.ts
