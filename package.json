@@ -2,6 +2,7 @@
   "name": "playwright-serial-parallel-dependencies-demo",
   "version": "1.0.0",
   "private": true,
+  "license": "Apache-2.0",
   "description": "Demo: splitting Playwright tests into parallel-safe and serial-only suites, with and without project dependencies.",
   "scripts": {
     "test:parallel": "playwright test --project=parallel-safe",

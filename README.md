@@ -59,3 +59,7 @@ Copy `.env.example` to `.env` and point the URLs at real environments to use it 
 - `.env.example`: one base URL per environment flavor
 - `.github/workflows/split-steps.yml`: recommended CI setup with `continue-on-error` and a final gate step
 - `.github/workflows/project-dependencies.yml`: manual workflow that demonstrates the dependency gotcha
+
+## License
+
+[Apache License 2.0](LICENSE)
