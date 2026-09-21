@@ -13,6 +13,9 @@
     "test:tagged:parallel": "playwright test -c playwright.tagged.config.ts --project=parallel-safe",
     "test:tagged:serial": "playwright test -c playwright.tagged.config.ts --project=serial-only",
     "test:envs": "playwright test -c playwright.environments.config.ts",
+    "test:locks": "playwright test -c playwright.locks.config.ts mutators",
+    "test:locks:partial": "playwright test -c playwright.locks.config.ts mutators readers-unlocked",
+    "test:locks:all": "playwright test -c playwright.locks.config.ts mutators readers-locked",
     "test:tagged:cli": "playwright test -c playwright.tagged-cli.config.ts --grep-invert @serial && playwright test -c playwright.tagged-cli.config.ts --grep @serial --workers=1"
   },
   "devDependencies": {
